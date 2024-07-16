@@ -10,6 +10,17 @@ on:
   pull_request:
     branches: [ "main" ]
 
+  inputs:
+      build_id:
+        required: true
+        type: number
+      deploy_target:
+        required: true
+        type: string
+      perform_deploy:
+        required: true
+        type: boolean
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -34,3 +45,11 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+   deploy:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.perform_deploy }}
+    steps:
+      - name: Deploy build to target
+        run: echo "Deploying build:${{ inputs.build_id }} to target:${{ inputs.deploy_target }}"       
+      
